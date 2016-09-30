@@ -1,0 +1,1 @@
+java -cp ..\PozigunJavaLab2\target\delta-1.0-jar-with-dependencies.jar generator.Generator -v 0.1 -m 0.0|java -cp ..\PozigunJavaLab2\target\delta-1.0-jar-with-dependencies.jar deltaEncode.DeltaEncode -e stdin|java -cp ..\PozigunJavaLab2\target\delta-1.0-jar-with-dependencies.jar deltaEncode.DeltaEncode -d stdout > out.txt
