@@ -1,17 +1,20 @@
 package deltaEncode;
 
 import java.io.*;
+
 import org.apache.commons.cli.*;
 
 public class DeltaEncode {
     private static final int BLOCK_SIZE = 10;
-    private static void readAndWriteByBuffer(InputStream iStream, OutputStream oStream) throws IOException{
+
+    private static void readAndWriteByBuffer(InputStream iStream, OutputStream oStream) throws IOException {
         byte[] buf = new byte[BLOCK_SIZE];
         int bufSize;
         while ((bufSize = iStream.read(buf, 0, buf.length)) != -1) {
             oStream.write(buf, 0, bufSize);
         }
     }
+
     public static void deltaDecode(String inFilename, String outFilename) throws IOException {
         try (InputStream iStream = new FileInputStream(inFilename);
              OutputStream oStream = new DeltaEnOutputStream(new FileOutputStream(outFilename))) {

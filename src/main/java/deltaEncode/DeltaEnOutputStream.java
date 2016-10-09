@@ -6,6 +6,7 @@ import java.io.OutputStream;
 public class DeltaEnOutputStream extends OutputStream {
     private OutputStream outStr;
     private int prev = 0;
+
     public DeltaEnOutputStream(OutputStream outputStream) {
         outStr = outputStream;
     }
@@ -31,7 +32,7 @@ public class DeltaEnOutputStream extends OutputStream {
         } else if (len == 0) {
             return;
         }
-        for (int i = 0 ; i < len ; i++) {
+        for (int i = 0; i < len; i++) {
             write(b[off + i]);
         }
     }

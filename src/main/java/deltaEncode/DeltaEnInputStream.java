@@ -1,7 +1,5 @@
 package deltaEncode;
 
-import org.omg.IOP.TAG_RMI_CUSTOM_MAX_STREAM_FORMAT;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -9,6 +7,7 @@ public class DeltaEnInputStream extends InputStream {
     public static final int EndOfStream = 256;
     private InputStream inStr;
     private byte prev = 0;
+
     public DeltaEnInputStream(InputStream inputStream) {
         inStr = inputStream;
     }
@@ -42,14 +41,14 @@ public class DeltaEnInputStream extends InputStream {
         if (c == EndOfStream) {
             return -1;
         }
-        b[off] = (byte)c;
+        b[off] = (byte) c;
         int i = 1;
-        for (; i < len ; i++) {
+        for (; i < len; i++) {
             c = read();
             if (c == EndOfStream) {
                 break;
             }
-            b[off + i] = (byte)c;
+            b[off + i] = (byte) c;
         }
         return i;
     }

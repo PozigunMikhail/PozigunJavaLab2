@@ -1,6 +1,7 @@
 package generator;
 
 import org.apache.commons.cli.*;
+
 import java.util.Random;
 
 public class Generator {
@@ -8,7 +9,7 @@ public class Generator {
         Random rand = new Random();
         for (int i = 0; i < count; i++) {
             double x = rand.nextGaussian() * Math.sqrt(var) + mean;
-            int res = Math.abs((int)(100 * x));
+            int res = Math.abs((int) (100 * x));
             System.out.print(res + " ");
         }
     }
