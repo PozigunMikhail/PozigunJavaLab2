@@ -5,14 +5,15 @@ import java.io.OutputStream;
 
 public class DeltaEnOutputStream extends OutputStream {
     private OutputStream outStr;
-
-    DeltaEnOutputStream(OutputStream outputStream) {
+    private int prev = 0;
+    public DeltaEnOutputStream(OutputStream outputStream) {
         outStr = outputStream;
     }
 
     @Override
     public void write(int b) throws IOException {
-        outStr.write(b);
+        outStr.write(prev + b);
+        prev += b;
     }
 
     @Override
@@ -30,16 +31,18 @@ public class DeltaEnOutputStream extends OutputStream {
         } else if (len == 0) {
             return;
         }
-        byte prev = b[0];
-        for (int i = 1; i < len; i++) {
-            b[i] = (byte) (b[i] + prev);
-            prev = b[i];
+        for (int i = 0 ; i < len ; i++) {
+            write(b[off + i]);
         }
-        outStr.write(b, 0, len);
     }
 
     @Override
     public void close() throws IOException {
         outStr.close();
+    }
+
+    @Override
+    public void flush() throws IOException {
+        outStr.flush();
     }
 }
