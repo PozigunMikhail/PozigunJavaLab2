@@ -6,7 +6,7 @@ import java.io.InputStream;
 public class DeltaEnInputStream extends InputStream {
     public static final int EndOfStream = 256;
     private InputStream inStr;
-    private byte prev = 0;
+    private int prev = 0;
 
     public DeltaEnInputStream(InputStream inputStream) {
         inStr = inputStream;
@@ -14,7 +14,7 @@ public class DeltaEnInputStream extends InputStream {
 
     @Override
     public int read() throws IOException {
-        byte cur = (byte) inStr.read();
+        int cur = inStr.read();
         if (cur == -1) {
             return EndOfStream;
         }

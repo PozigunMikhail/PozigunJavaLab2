@@ -121,21 +121,21 @@ public class DeltaEnStreamTest {
     }
 
     @Test
-    public void DeltaEnStreamTest() throws Exception {
+    public void DeltaEnStreamAdditionalTests() throws Exception {
         oneDeltaEnStreamTest(new byte[]{1, 127, 0, 127, 0});
         oneDeltaEnStreamTest(new byte[]{1, 1, 1, 1, 1, 1});
         oneDeltaEnStreamTest(new byte[]{0, 0, 0, 0, 0});
     }
 
     @Test
-    public void DeltaEnStreamBufferedTest() throws Exception {
+    public void DeltaEnStreamAdditionalBufferedTests() throws Exception {
         oneDeltaEnStreamBufferedTest(new byte[]{0, 127, 0, 127, 0});
         oneDeltaEnStreamBufferedTest(new byte[]{1, 1, 1, 1, 1, 1});
         oneDeltaEnStreamBufferedTest(new byte[]{0, 0, 0, 0, 0});
     }
 
     @Test
-    public void DeltaEnStreamBufferedWNZeroOffsetTest() throws Exception {
+    public void DeltaEnStreamAdditionalBufferedWNZeroOffsetTests() throws Exception {
         oneDeltaEnStreamBufferedWNZeroOffsetTest(new byte[]{0, 127, 0, 127, 0});
         oneDeltaEnStreamBufferedWNZeroOffsetTest(new byte[]{1, 1, 1, 1, 1, 1});
         oneDeltaEnStreamBufferedWNZeroOffsetTest(new byte[]{0, 0, 0, 0, 0});
