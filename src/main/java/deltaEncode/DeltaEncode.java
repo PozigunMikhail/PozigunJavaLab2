@@ -42,21 +42,21 @@ public class DeltaEncode {
     }
 
     public static void main(String[] args) {
-        Option encodeOpt = new Option("e", "encode", true, "Encoding"),
-                decodeOpt = new Option("d", "decode", true, "Decoding"),
-                outOpt = new Option("out", true, "Output file"),
-                helpOpt = new Option("h", "help", false, "Help");
-        encodeOpt.setArgs(1);
-        decodeOpt.setArgs(1);
-        outOpt.setArgs(1);
-        encodeOpt.setArgName("input filename or stdin");
-        decodeOpt.setArgName("decoded filename or stdout");
-        outOpt.setArgName("output filename");
+        Option encode = new Option("e", "encode", true, "Encoding"),
+                decode = new Option("d", "decode", true, "Decoding"),
+                out = new Option("out", true, "Output file"),
+                help = new Option("h", "help", false, "Help");
+        encode.setArgs(1);
+        decode.setArgs(1);
+        out.setArgs(1);
+        encode.setArgName("input filename or stdin");
+        decode.setArgName("decoded filename or stdout");
+        out.setArgName("output filename");
         Options options = new Options();
-        options.addOption(encodeOpt);
-        options.addOption(decodeOpt);
-        options.addOption(outOpt);
-        options.addOption(helpOpt);
+        options.addOption(encode);
+        options.addOption(decode);
+        options.addOption(out);
+        options.addOption(help);
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine commandLine = parser.parse(options, args);

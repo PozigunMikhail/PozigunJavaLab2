@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class DeltaEnInputStream extends InputStream {
-    public static final int EndOfStream = 256;
+    public static final int END_OF_STREAM = 256;
     private InputStream inStr;
     private int prev = 0;
 
@@ -16,7 +16,7 @@ public class DeltaEnInputStream extends InputStream {
     public int read() throws IOException {
         int cur = inStr.read();
         if (cur == -1) {
-            return EndOfStream;
+            return END_OF_STREAM;
         }
         int retValue = cur - prev;
         prev = cur;
@@ -38,14 +38,14 @@ public class DeltaEnInputStream extends InputStream {
             return 0;
         }
         int c = read();
-        if (c == EndOfStream) {
+        if (c == END_OF_STREAM) {
             return -1;
         }
         b[off] = (byte) c;
         int i = 1;
         for (; i < len; i++) {
             c = read();
-            if (c == EndOfStream) {
+            if (c == END_OF_STREAM) {
                 break;
             }
             b[off + i] = (byte) c;

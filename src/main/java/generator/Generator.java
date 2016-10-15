@@ -15,29 +15,29 @@ public class Generator {
     }
 
     public static void main(String[] args) {
-        Option meanOpt = new Option("m", "mean", true, "Mean value"),
-                varOpt = new Option("v", "variance", true, "Variance value"),
-                helpOpt = new Option("h", "help", false, "Help"),
-                numCountOpt = new Option("c", "count", true, "Numbers count");
-        meanOpt.setArgs(1);
-        varOpt.setArgs(1);
-        numCountOpt.setArgs(1);
-        meanOpt.setArgName("value");
-        varOpt.setArgName("value");
-        numCountOpt.setArgName("value");
+        Option mean = new Option("m", "mean", true, "Mean value"),
+                var = new Option("v", "variance", true, "Variance value"),
+                help = new Option("h", "help", false, "Help"),
+                numCount = new Option("c", "count", true, "Numbers count");
+        mean.setArgs(1);
+        var.setArgs(1);
+        numCount.setArgs(1);
+        mean.setArgName("value");
+        var.setArgName("value");
+        numCount.setArgName("value");
         Options options = new Options();
-        options.addOption(meanOpt);
-        options.addOption(varOpt);
-        options.addOption(helpOpt);
-        options.addOption(numCountOpt);
+        options.addOption(mean);
+        options.addOption(var);
+        options.addOption(help);
+        options.addOption(numCount);
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine commandLine = parser.parse(options, args);
             if (commandLine.hasOption("m") && commandLine.hasOption("v") && commandLine.hasOption("c")) {
-                double mean = Double.parseDouble(commandLine.getOptionValue("m")),
-                        var = Double.parseDouble(commandLine.getOptionValue("v"));
+                double meanValue = Double.parseDouble(commandLine.getOptionValue("m")),
+                        varValue = Double.parseDouble(commandLine.getOptionValue("v"));
                 int count = Integer.parseInt(commandLine.getOptionValue("c"));
-                Generator.generate(mean, var, count);
+                Generator.generate(meanValue, varValue, count);
             }
             if (commandLine.hasOption("h")) {
                 HelpFormatter formatter = new HelpFormatter();
