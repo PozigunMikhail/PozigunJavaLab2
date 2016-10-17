@@ -23,7 +23,8 @@ public class DeltaEnStreamTest {
 
     private void oneDeltaEnStreamEncodeTest(byte[] inputArr, byte[] encodedArr) throws Exception {
         try (InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr))) {
-            int elem, curIdx = 0;
+            int elem;
+            int curIdx = 0;
             while ((elem = inStream.read()) != DeltaEnInputStream.END_OF_STREAM) {
                 assertEquals(elem, encodedArr[curIdx]);
                 curIdx++;
@@ -35,13 +36,14 @@ public class DeltaEnStreamTest {
         try (InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr))) {
             for (int i = 1; i <= inputArr.length; i++) {
                 byte[] buf = new byte[i];
-                int bufSize, curIdx = 0;
+                int bufSize;
+                int curIdx = 0;
                 while ((bufSize = inStream.read(buf, 0, buf.length)) != -1) {
                     byte[] subArrayEncoded = new byte[bufSize],
                             subArrayBuf = new byte[bufSize];
                     System.arraycopy(encodedArr, curIdx, subArrayEncoded, 0, bufSize);
                     System.arraycopy(buf, 0, subArrayBuf, 0, bufSize);
-                    assertEquals(Arrays.equals(subArrayEncoded, subArrayBuf), true);
+                    assertTrue(Arrays.equals(subArrayEncoded, subArrayBuf));
                     curIdx += bufSize;
                 }
             }
@@ -52,13 +54,14 @@ public class DeltaEnStreamTest {
         try (InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr))) {
             for (int i = 1; i < inputArr.length; i++) {
                 byte[] buf = new byte[inputArr.length];
-                int bufSize, curIdx = 0;
+                int bufSize;
+                int curIdx = 0;
                 while ((bufSize = inStream.read(buf, i, inputArr.length - i)) != -1) {
                     byte[] subArrayEncoded = new byte[bufSize],
                             subArrayBuf = new byte[bufSize];
                     System.arraycopy(encodedArr, curIdx, subArrayEncoded, 0, bufSize);
                     System.arraycopy(buf, i, subArrayBuf, 0, bufSize);
-                    assertEquals(Arrays.equals(subArrayEncoded, subArrayBuf), true);
+                    assertTrue(Arrays.equals(subArrayEncoded, subArrayBuf));
                     curIdx += bufSize;
                 }
             }
@@ -66,9 +69,9 @@ public class DeltaEnStreamTest {
     }
 
     private void oneDeltaEnStreamTest(byte[] inputArr) throws Exception {
-        try (ByteArrayOutputStream outStr = new ByteArrayOutputStream();
-             InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr));
-             OutputStream outStream = new DeltaEnOutputStream(outStr)) {
+        ByteArrayOutputStream outStr;
+        try (InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr));
+             OutputStream outStream = new DeltaEnOutputStream(outStr = new ByteArrayOutputStream())) {
             int elem;
             while ((elem = inStream.read()) != DeltaEnInputStream.END_OF_STREAM) {
                 outStream.write(elem);
@@ -77,14 +80,14 @@ public class DeltaEnStreamTest {
             byte[] outputArr = new byte[outStr.toByteArray().length];
             System.arraycopy(outStr.toByteArray(), 0, outputArr, 0, outStr.toByteArray().length);
             assertEquals(inputArr.length, outputArr.length);
-            assertEquals(Arrays.equals(inputArr, outputArr), true);
+            assertTrue(Arrays.equals(inputArr, outputArr));
         }
     }
 
     private void oneDeltaEnStreamBufferedTest(byte[] inputArr) throws Exception {
-        try (ByteArrayOutputStream outStr = new ByteArrayOutputStream();
-             InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr));
-             OutputStream outStream = new DeltaEnOutputStream(outStr)) {
+        ByteArrayOutputStream outStr;
+        try (InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr));
+             OutputStream outStream = new DeltaEnOutputStream(outStr = new ByteArrayOutputStream())) {
             for (int i = 1; i <= inputArr.length; i++) {
                 byte[] buf = new byte[i];
                 int bufSize;
@@ -95,16 +98,16 @@ public class DeltaEnStreamTest {
                 byte[] outputArr = new byte[outStr.toByteArray().length];
                 System.arraycopy(outStr.toByteArray(), 0, outputArr, 0, outStr.toByteArray().length);
                 assertEquals(inputArr.length, outputArr.length);
-                assertEquals(Arrays.equals(inputArr, outputArr), true);
+                assertTrue(Arrays.equals(inputArr, outputArr));
             }
         }
     }
 
 
     private void oneDeltaEnStreamBufferedWNZeroOffsetTest(byte[] inputArr) throws Exception {
-        try (ByteArrayOutputStream outStr = new ByteArrayOutputStream();
-             InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr));
-             OutputStream outStream = new DeltaEnOutputStream(outStr)) {
+        ByteArrayOutputStream outStr;
+        try (InputStream inStream = new DeltaEnInputStream(new ByteArrayInputStream(inputArr));
+             OutputStream outStream = new DeltaEnOutputStream(outStr = new ByteArrayOutputStream())) {
             for (int i = 1; i < inputArr.length; i++) {
                 byte[] buf = new byte[inputArr.length];
                 int bufSize;
@@ -115,13 +118,13 @@ public class DeltaEnStreamTest {
                 byte[] outputArr = new byte[outStr.toByteArray().length];
                 System.arraycopy(outStr.toByteArray(), 0, outputArr, 0, outStr.toByteArray().length);
                 assertEquals(inputArr.length, outputArr.length);
-                assertEquals(Arrays.equals(inputArr, outputArr), true);
+                assertTrue(Arrays.equals(inputArr, outputArr));
             }
         }
     }
 
     @Test
-    public void DeltaEnStreamRandomDataBufferedTest() throws Exception {
+    public void deltaEnStreamRandomDataBufferedTest() throws Exception {
         Random random = new Random();
         for (int i = 0; i < 20; i++) {
             byte[] inputArr = new byte[random.nextInt(100)];
@@ -131,7 +134,7 @@ public class DeltaEnStreamTest {
     }
 
     @Test
-    public void DeltaEnStreamRandomDataBufferedWNZeroOffsetTest() throws Exception {
+    public void deltaEnStreamRandomDataBufferedWNZeroOffsetTest() throws Exception {
         Random random = new Random();
         for (int i = 0; i < 20; i++) {
             byte[] inputArr = new byte[random.nextInt(100)];
@@ -141,7 +144,7 @@ public class DeltaEnStreamTest {
     }
 
     @Test
-    public void DeltaEnStreamRandomDataTest() throws Exception {
+    public void deltaEnStreamRandomDataTest() throws Exception {
         Random random = new Random();
         for (int i = 0; i < 20; i++) {
             byte[] inputArr = new byte[random.nextInt(100)];
@@ -151,14 +154,14 @@ public class DeltaEnStreamTest {
     }
 
     @Test
-    public void DeltaEnStreamEmptyDataTest() throws Exception {
+    public void deltaEnStreamEmptyDataTest() throws Exception {
         oneDeltaEnStreamTest(new byte[]{});
         oneDeltaEnStreamBufferedTest(new byte[]{});
         oneDeltaEnStreamBufferedWNZeroOffsetTest(new byte[]{});
     }
 
     @Test
-    public void DeltaEnStreamAdditionalTests() throws Exception {
+    public void deltaEnStreamAdditionalTests() throws Exception {
         oneDeltaEnStreamTest(new byte[]{1, 127, 0, 127, 0});
         oneDeltaEnStreamTest(new byte[]{1, 1, 1, 1, 1, 1});
         oneDeltaEnStreamTest(new byte[]{0, 0, 0, 0, 0});
@@ -170,7 +173,7 @@ public class DeltaEnStreamTest {
     }
 
     @Test
-    public void DeltaEnStreamAdditionalBufferedTests() throws Exception {
+    public void deltaEnStreamAdditionalBufferedTests() throws Exception {
         oneDeltaEnStreamBufferedTest(new byte[]{0, 127, 0, 127, 0});
         oneDeltaEnStreamBufferedTest(new byte[]{1, 1, 1, 1, 1, 1});
         oneDeltaEnStreamBufferedTest(new byte[]{0, 0, 0, 0, 0});
@@ -182,7 +185,7 @@ public class DeltaEnStreamTest {
     }
 
     @Test
-    public void DeltaEnStreamAdditionalBufferedWNZeroOffsetTests() throws Exception {
+    public void deltaEnStreamAdditionalBufferedWNZeroOffsetTests() throws Exception {
         oneDeltaEnStreamBufferedWNZeroOffsetTest(new byte[]{0, 127, 0, 127, 0});
         oneDeltaEnStreamBufferedWNZeroOffsetTest(new byte[]{1, 1, 1, 1, 1, 1});
         oneDeltaEnStreamBufferedWNZeroOffsetTest(new byte[]{0, 0, 0, 0, 0});
@@ -194,7 +197,7 @@ public class DeltaEnStreamTest {
     }
 
     @Test
-    public void DeltaEnStreamBigArrOfOnesTest() throws Exception {
+    public void deltaEnStreamBigArrOfOnesTest() throws Exception {
         for (int i = 1; i <= 5; i++) {
             byte[] arr = new byte[i * 500];
             byte[] encodedArr = new byte[i * 500];

@@ -42,10 +42,10 @@ public class DeltaEncode {
     }
 
     public static void main(String[] args) {
-        Option encode = new Option("e", "encode", true, "Encoding"),
-                decode = new Option("d", "decode", true, "Decoding"),
-                out = new Option("out", true, "Output file"),
-                help = new Option("h", "help", false, "Help");
+        Option encode = new Option("e", "encode", true, "Encoding");
+        Option decode = new Option("d", "decode", true, "Decoding");
+        Option out = new Option("out", true, "Output file");
+        Option help = new Option("h", "help", false, "Help");
         encode.setArgs(1);
         decode.setArgs(1);
         out.setArgs(1);
@@ -67,8 +67,8 @@ public class DeltaEncode {
                     if (commandLine.hasOption("out")) {
                         DeltaEncode.deltaEncode(commandLine.getOptionValue("e"), commandLine.getOptionValue("out"));
                     } else {
-                        String inputFilename = commandLine.getOptionValue("e"),
-                                outputFilename = inputFilename.substring(0, inputFilename.lastIndexOf(".")) + ".diff";
+                        String inputFilename = commandLine.getOptionValue("e");
+                        String outputFilename = inputFilename.substring(0, inputFilename.lastIndexOf(".")) + ".diff";
                         DeltaEncode.deltaEncode(inputFilename, outputFilename);
                     }
                 }
@@ -80,8 +80,8 @@ public class DeltaEncode {
                     if (commandLine.hasOption("out")) {
                         DeltaEncode.deltaDecode(commandLine.getOptionValue("d"), commandLine.getOptionValue("out"));
                     } else {
-                        String inputFilename = commandLine.getOptionValue("d"),
-                                outputFilename = inputFilename.substring(0, inputFilename.lastIndexOf(".")) + ".txt";
+                        String inputFilename = commandLine.getOptionValue("d");
+                        String outputFilename = inputFilename.substring(0, inputFilename.lastIndexOf(".")) + ".txt";
                         DeltaEncode.deltaDecode(inputFilename, outputFilename);
                     }
                 }
